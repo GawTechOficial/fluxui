@@ -1,0 +1,74 @@
+{
+  "name": "@fluxui/monorepo",
+  "description": "Monorepo for Flux UI components and utilities",
+  "private": true,
+  "type": "module",
+  "version": "0.0.0",
+  "main": "index.js",
+  "author": "GawTech",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "workspaces": [
+    "packages/*",
+    "playgrounds/*"
+  ],
+  "scripts": {
+    "setup": "npx rimraf --glob **/node_modules **/dist ./package-lock.json && npm run init",
+    "init": "npm install && husky && npm run build",
+    "clean": "npx rimraf --glob **/node_modules **/dist ./package-lock.json",
+    "build": "cross-env NODE_ENV=production npm run build:check && npm run build:packages",
+    "build:check": "npm run format:check && npm run lint && npm run typecheck && npm run security:check && npm run test",
+    "build:packages": "npm run -w packages/tokens build && npm run -w packages/tailwindcss build",
+    "typecheck": "tsc -p tsconfig.base.json --noEmit",
+    "security:check": "npm audit --audit-level high",
+    "lint": "eslint . --cache",
+    "lint:fix": "eslint . --cache --fix",
+    "format": "prettier --write \"**/*.{js,mjs,ts,mts,d.ts,html,md}\" --cache",
+    "format:check": "prettier --check \"**/*.{js,mjs,ts,mts,d.ts,html,md}\"",
+    "dev:tw3": "npm run -w playground-v3 dev",
+    "dev:tw4": "npm run -w playground-v4 dev",
+    "test": "vitest run",
+    "release": "npm run build && changeset publish",
+    "release:beta": "npm run build && changeset publish --tag beta",
+    "release:rc": "npm run build && changeset publish --tag rc",
+    "version-packages": "changeset version"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "0.5.1",
+    "@changesets/cli": "2.29.5",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@types/node": "24.2.1",
+    "@typescript-eslint/eslint-plugin": "^8.35.0",
+    "@typescript-eslint/parser": "^8.35.0",
+    "@vitest/ui": "3.2.4",
+    "changesets": "^1.0.2",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.30.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.1",
+    "glob": "^11.0.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.5",
+    "prettier": "^3.6.2",
+    "rimraf": "6.0.1",
+    "ts-node": "10.9.2",
+    "tsx": "^4.20.3",
+    "typescript": "5.9.2",
+    "vitest": "3.2.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "packageManager": "npm@10.0.0",
+  "lint-staged": {
+    "**/*.{ts,tsx,js,jsx,cjs,mjs,json,md,css}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  }
+}
