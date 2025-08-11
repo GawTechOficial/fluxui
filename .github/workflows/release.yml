@@ -1,0 +1,57 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  issues: write
+  packages: write
+  id-token: write
+  pull-requests: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Using Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run build checks
+        run: npm run build:check
+
+      - name: Build packages
+        run: npm run build:packages
+
+      - uses: changesets/action@v1
+        id: changesets
+        with:
+          version: npm run version-packages
+          publish: npm run release
+          title: '🚀 Release new version'
+          commit: 'chore: release packages'
+          createGithubReleases: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # Log de pacotes publicados para informação
+      - name: Log published packages
+        if: steps.changesets.outputs.published == 'true'
+        run: |
+          echo "Pacotes publicados:"
+          echo '${{ steps.changesets.outputs.publishedPackages }}' | jq '.[] | "- \(.name)@\(.version)"' -r

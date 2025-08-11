@@ -137,3 +137,10 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Temporary folders
+.dist
+**/dist
+.DS_Store
+**/.turbo
+**/.eslintcache

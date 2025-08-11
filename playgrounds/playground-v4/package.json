@@ -1,0 +1,11 @@
+{
+  "name": "playground-v4",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "echo 'TODO: iniciar playground Angular 20 + TW v4' && exit 0"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  }
+}
