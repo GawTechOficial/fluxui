@@ -12,22 +12,28 @@
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "🔄 Dependency Dashboard - FluxUI",
   "separateMinorPatch": true,
+
   "semanticCommits": "enabled",
-  "commitMessagePrefix": "chore(deps):",
-  "prTitle": "{{semanticPrefix}}{{#if isPin}}Pin{{else}}Update{{/if}} {{depName}} to {{#if isRange}}{{newVersion}}{{else}}{{#if isMajor}}{{prettyNewMajor}}{{else}}{{#if isMinor}}{{newVersion}}{{else}}{{newVersion}}{{/if}}{{/if}}{{/if}}",
+  "semanticCommitType": "chore",
+  "semanticCommitScope": "deps",
+
+  "prTitle": "{{semanticPrefix}}{{#if isPin}}Pin{{else}}Update{{/if}} {{depName}} to {{newVersion}}",
+
   "vulnerabilityAlerts": {
     "labels": ["security", "deps"]
   },
+
   "lockFileMaintenance": {
     "enabled": true,
     "schedule": ["before 6am on monday"]
   },
+
   "packageRules": [
     {
       "description": "Patches updates",
       "matchUpdateTypes": ["patch"],
       "addLabels": ["patch"],
-      "minimumReleaseAge": "7 day"
+      "minimumReleaseAge": "7 days"
     },
     {
       "description": "Minor updates",
@@ -48,6 +54,7 @@
       "enabled": false
     }
   ],
+
   "customManagers": [
     {
       "customType": "regex",
@@ -55,7 +62,7 @@
       "fileMatch": ["^package\\.json$"],
       "matchStrings": ["\"node\":\\s*\">=(?<currentValue>\\d+)\""],
       "depNameTemplate": "node",
-      "datasourceTemplate": "node-version"
+      "datasourceTemplate": "node"
     }
   ]
 }
