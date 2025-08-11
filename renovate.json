@@ -1,0 +1,61 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "baseBranches": ["develop"],
+  "rangeStrategy": "bump",
+  "labels": ["deps"],
+  "timezone": "America/Sao_Paulo",
+  "schedule": ["after 9am and before 5pm on every weekday"],
+  "prConcurrentLimit": 10,
+  "prHourlyLimit": 3,
+  "rebaseWhen": "behind-base-branch",
+  "dependencyDashboard": true,
+  "dependencyDashboardTitle": "🔄 Dependency Dashboard - FluxUI",
+  "separateMinorPatch": true,
+  "semanticCommits": "enabled",
+  "commitMessagePrefix": "chore(deps):",
+  "prTitle": "{{semanticPrefix}}{{#if isPin}}Pin{{else}}Update{{/if}} {{depName}} to {{#if isRange}}{{newVersion}}{{else}}{{#if isMajor}}{{prettyNewMajor}}{{else}}{{#if isMinor}}{{newVersion}}{{else}}{{newVersion}}{{/if}}{{/if}}{{/if}}",
+  "vulnerabilityAlerts": {
+    "labels": ["security", "deps"]
+  },
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 6am on monday"]
+  },
+  "packageRules": [
+    {
+      "description": "Patches updates",
+      "matchUpdateTypes": ["patch"],
+      "addLabels": ["patch"],
+      "minimumReleaseAge": "7 day"
+    },
+    {
+      "description": "Minor updates",
+      "matchUpdateTypes": ["minor"],
+      "addLabels": ["minor"],
+      "minimumReleaseAge": "14 days"
+    },
+    {
+      "description": "Major updates",
+      "matchUpdateTypes": ["major"],
+      "addLabels": ["major", "breaking-change"],
+      "minimumReleaseAge": "21 days",
+      "prPriority": 10
+    },
+    {
+      "description": "Monorepo workspace dependencies - desabilitado",
+      "matchPackagePatterns": ["^@fluxui/"],
+      "enabled": false
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Update Node.js version in package.json engines",
+      "fileMatch": ["^package\\.json$"],
+      "matchStrings": ["\"node\":\\s*\">=(?<currentValue>\\d+)\""],
+      "depNameTemplate": "node",
+      "datasourceTemplate": "node-version"
+    }
+  ]
+}
