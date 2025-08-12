@@ -12,20 +12,17 @@
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "🔄 Dependency Dashboard - FluxUI",
   "separateMinorPatch": true,
-
   "semanticCommits": "enabled",
   "semanticCommitType": "chore",
   "semanticCommitScope": "deps",
-  "prTitle": "{{semanticPrefix}}{{#if isPin}}Pin{{else}}Update{{/if}} {{depName}} to {{newVersion}}",
+  "prTitle": "{{#if semanticCommitType}}{{semanticCommitType}}{{#if semanticCommitScope}}({{semanticCommitScope}}){{/if}}: {{/if}}{{#if isPin}}Pin{{else}}Update{{/if}} {{depName}} to {{newVersion}}",
   "vulnerabilityAlerts": {
     "labels": ["security", "deps"]
   },
-
   "lockFileMaintenance": {
     "enabled": true,
     "schedule": ["before 6am on monday"]
   },
-
   "packageRules": [
     {
       "description": "Patches updates",
@@ -52,7 +49,6 @@
       "matchPackageNames": ["/^@fluxui//"]
     }
   ],
-
   "customManagers": [
     {
       "customType": "regex",
