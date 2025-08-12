@@ -23,6 +23,7 @@ export default {
         'workflow',
         'lint',
         'test',
+        'branch-rebase',
       ],
     ],
 
