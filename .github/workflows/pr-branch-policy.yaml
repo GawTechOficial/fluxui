@@ -11,9 +11,9 @@ jobs:
         if: github.base_ref == 'main'
         run: |
           case "${{ github.head_ref }}" in
-            develop|hotfix/*|renovate/*) ;;
+            develop|hotfix/*) ;;
             *)
-              echo "❌ Pull Requests to 'main' are only allowed from 'develop', 'hotfix/*', or 'renovate/*' branches."
+              echo "❌ Pull Requests to 'main' are only allowed from 'develop' or 'hotfix/*' branches."
               exit 1
               ;;
           esac
@@ -22,9 +22,9 @@ jobs:
         if: github.base_ref == 'develop'
         run: |
           case "${{ github.head_ref }}" in
-            main|feature/*|fix/*) ;;
+            main|feature/*|fix/*|renovate/*) ;;
             *)
-              echo "❌ Pull Requests to 'develop' are only allowed from 'main', 'feature/*', or 'fix/*' branches."
+              echo "❌ Pull Requests to 'develop' are only allowed from 'main', 'feature/*', 'fix/*', or 'renovate/*' branches."
               exit 1
               ;;
           esac
