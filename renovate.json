@@ -1,11 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
-  "baseBranches": ["develop"],
+  "baseBranchPatterns": ["develop"],
   "rangeStrategy": "bump",
   "labels": ["deps"],
   "timezone": "America/Sao_Paulo",
-  "schedule": ["after 9am and before 5pm on every weekday"],
+  "schedule": ["after 9am and before 5pm every weekday"],
   "prConcurrentLimit": 10,
   "prHourlyLimit": 3,
   "rebaseWhen": "behind-base-branch",
@@ -13,8 +13,9 @@
   "dependencyDashboardTitle": "🔄 Dependency Dashboard - FluxUI",
   "separateMinorPatch": true,
   "semanticCommits": "enabled",
-  "commitMessagePrefix": "chore(deps):",
-  "prTitle": "{{semanticPrefix}}{{#if isPin}}Pin{{else}}Update{{/if}} {{depName}} to {{#if isRange}}{{newVersion}}{{else}}{{#if isMajor}}{{prettyNewMajor}}{{else}}{{#if isMinor}}{{newVersion}}{{else}}{{newVersion}}{{/if}}{{/if}}{{/if}}",
+  "semanticCommitType": "chore",
+  "semanticCommitScope": "deps",
+  "prTitle": "{{#if semanticCommitType}}{{semanticCommitType}}{{#if semanticCommitScope}}({{semanticCommitScope}}){{/if}}: {{/if}}{{#if isPin}}Pin{{else}}Update{{/if}} {{depName}} to {{newVersion}}",
   "vulnerabilityAlerts": {
     "labels": ["security", "deps"]
   },
@@ -27,7 +28,7 @@
       "description": "Patches updates",
       "matchUpdateTypes": ["patch"],
       "addLabels": ["patch"],
-      "minimumReleaseAge": "7 day"
+      "minimumReleaseAge": "7 days"
     },
     {
       "description": "Minor updates",
@@ -44,18 +45,18 @@
     },
     {
       "description": "Monorepo workspace dependencies - desabilitado",
-      "matchPackagePatterns": ["^@fluxui/"],
-      "enabled": false
+      "enabled": false,
+      "matchPackageNames": ["/^@fluxui//"]
     }
   ],
   "customManagers": [
     {
       "customType": "regex",
       "description": "Update Node.js version in package.json engines",
-      "fileMatch": ["^package\\.json$"],
+      "managerFilePatterns": ["/^package\\.json$/"],
       "matchStrings": ["\"node\":\\s*\">=(?<currentValue>\\d+)\""],
       "depNameTemplate": "node",
-      "datasourceTemplate": "node-version"
+      "datasourceTemplate": "node"
     }
   ]
 }
