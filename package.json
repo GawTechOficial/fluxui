@@ -8,7 +8,7 @@
   "author": "GawTech",
   "license": "MIT",
   "engines": {
-    "node": ">=22.17.1"
+    "node": ">=22.18.0"
   },
   "workspaces": [
     "packages/*",
