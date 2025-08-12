@@ -40,5 +40,6 @@ jobs:
             workflow
             lint
             test
+            branch-rebase
           requireScope: false
           validateSingleCommit: false
