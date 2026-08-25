@@ -8,7 +8,7 @@
   "author": "GawTech",
   "license": "MIT",
   "engines": {
-    "node": ">=22.18.0"
+    "node": ">=24.19.0"
   },
   "workspaces": [
     "packages/*",
@@ -40,7 +40,7 @@
     "@changesets/cli": "2.29.5",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
-    "@types/node": "24.2.1",
+    "@types/node": "24.13.3",
     "@typescript-eslint/eslint-plugin": "^8.39.1",
     "@typescript-eslint/parser": "^8.39.1",
     "@vitest/ui": "3.2.4",
